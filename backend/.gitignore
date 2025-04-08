@@ -1,1 +1,21 @@
+# Node modules
 node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS-related
+.DS_Store
+Thumbs.db
+
+# Build output (if using TS or bundler)
+dist/
+build/
+
+# Coverage reports
+coverage/
