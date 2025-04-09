@@ -13,6 +13,7 @@ import Members from "./Components/Members";
 import GroupMembers from "./Components/GroupMembers";
 import FramMembers from "./Components/FramMembers";
 import Projects from "./Components/Projects";
+import ClientDashboard from "./Components/ClientDashboard"
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path="/groupMembers" element={<GroupMembers />} />
         <Route path="/framMembers" element={<FramMembers />} />
         <Route path="/projects" element= {<Projects/>}/>
+        <Route path="/clientdashboard" element= {<ClientDashboard/>}/>
+
         
         
       </Routes>

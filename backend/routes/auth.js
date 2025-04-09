@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); // Fixed duplicate declaration
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -7,9 +7,9 @@ const User = require('../models/User');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
-  host:"smtp.gmail.com",
-  port:"587",
-  secure:false,
+  host: 'smtp.gmail.com',
+  port: '587',
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -22,7 +22,7 @@ const otpStore = {};
 // Generate 6-digit OTP
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-// Existing signup route
+// Signup route
 router.post('/signup', async (req, res) => {
   const { fullName, email, password } = req.body;
 
@@ -40,14 +40,14 @@ router.post('/signup', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
- 
+
     res.status(201).json({ token, user: { id: user._id, fullName, email, role: user.role } });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// login route
+// Login route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -74,7 +74,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Forgot Password 
+// Forgot Password
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
 
@@ -85,7 +85,7 @@ router.post('/forgot-password', async (req, res) => {
     }
 
     const otp = generateOtp();
-    otpStore[email] = otp; 
+    otpStore[email] = otp;
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -106,14 +106,14 @@ router.post('/verify-otp', (req, res) => {
   const { email, otp } = req.body;
 
   if (otpStore[email] && otpStore[email] === otp) {
-    delete otpStore[email]; 
+    delete otpStore[email];
     res.json({ message: 'OTP verified successfully' });
   } else {
     res.status(400).json({ message: 'Invalid or expired OTP' });
   }
 });
 
-// Updated Reset Password route
+// Reset Password route
 router.post('/reset-password', async (req, res) => {
   const { email, password } = req.body;
 
@@ -123,10 +123,9 @@ router.post('/reset-password', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    user.password = password; 
+    user.password = password;
     await user.save();
 
-    // Send email notification
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
@@ -135,7 +134,6 @@ router.post('/reset-password', async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-
     res.json({ message: 'Password reset successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -143,4 +141,3 @@ router.post('/reset-password', async (req, res) => {
 });
 
 module.exports = router;
-
