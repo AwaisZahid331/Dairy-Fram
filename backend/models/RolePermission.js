@@ -7,7 +7,6 @@ const rolePermissionSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
-// Update timestamp on save
 rolePermissionSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();

@@ -8,7 +8,6 @@ const teamMembershipSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
-// Update timestamp on save
 teamMembershipSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();

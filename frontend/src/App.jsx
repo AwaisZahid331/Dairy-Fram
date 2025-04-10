@@ -14,6 +14,7 @@ import GroupMembers from "./Components/GroupMembers";
 import FramMembers from "./Components/FramMembers";
 import Projects from "./Components/Projects";
 import ClientDashboard from "./Components/ClientDashboard"
+import ChatMessage from "./Components/ChatMessage";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
         <Route path="/framMembers" element={<FramMembers />} />
         <Route path="/projects" element= {<Projects/>}/>
         <Route path="/clientdashboard" element= {<ClientDashboard/>}/>
+        <Route path="/chatmessage" element= {<ChatMessage/>}/>
+
 
         
         

@@ -45,7 +45,7 @@ const Otp = () => {
     e.preventDefault();
     const otpCode = otp.join('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/verify-otp', { email, otp: otpCode });
+      const res = await axios.post('http://localhost:5000/api/users/verify-otp', { email, otp: otpCode });
       setError('');
       navigate('/resetpassword', { state: { email } }); 
     } catch (err) {

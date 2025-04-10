@@ -275,14 +275,14 @@ const Sidebar = () => {
                 <Work sx={{ fontSize: { xs: "18px", md: "22px" }, color: location.pathname === "/frammembers" ? "black" : "#9CA3AF" }} />
               </IconButton>
             </Link>
-            <Link to="/chat">
+            <Link to="/chatmessage">
               <IconButton
                 style={{
-                  backgroundColor: location.pathname === "/chat" ? "#8BD4E7" : "transparent",
+                  backgroundColor: location.pathname === "/chatmessage" ? "#8BD4E7" : "transparent",
                   borderRadius: "50%",
                 }}
               >
-                <Chat sx={{ fontSize: { xs: "18px", md: "22px" }, color: location.pathname === "/chat" ? "black" : "#9CA3AF" }} />
+                <Chat sx={{ fontSize: { xs: "18px", md: "22px" }, color: location.pathname === "/chatmessage" ? "black" : "#9CA3AF" }} />
               </IconButton>
             </Link>
             <Link to="/settings">
