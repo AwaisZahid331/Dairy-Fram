@@ -1,65 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const Admin = require('../models/Admin');
-const { auth, isAdmin } = require('../middleware/auth');
+const User = require('../models/User');
+const { auth, isAdmin } = require('../middleware/authCheck');
 
-// Admin signup (only for initial setup)
-router.post('/signup', async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    let admin = await Admin.findOne({ email });
-    if (admin) {
-      return res.status(400).json({ message: 'Admin already exists' });
-    }
-
-    admin = new Admin({ email, password });
-    await admin.save();
-
-    const token = jwt.sign(
-      { id: admin._id, role: admin.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
-
-    res.status(201).json({ token, admin: { id: admin._id, email, role: admin.role } });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
-// Admin login
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+// @route   PUT /api/admin/set-role
+// @desc    Set user role (admin only)
+// @access  Private (admin)
+router.put('/set-role', auth, isAdmin, async (req, res) => {
+  const { email, role } = req.body;
 
   try {
-    const admin = await Admin.findOne({ email });
-    if (!admin) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+    // Validate input
+    if (!email || !role) {
+      return res.status(400).json({ message: 'Email and role are required' });
     }
 
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+    // Validate role
+    if (!['user', 'admin'].includes(role)) {
+      return res.status(400).json({ message: 'Invalid role' });
     }
 
-    const token = jwt.sign(
-      { id: admin._id, role: admin.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
+    // Find and update user
+    const user = await User.findOneAndUpdate(
+      { email },
+      { $set: { role } },
+      { new: true }
     );
 
-    res.json({ token, admin: { id: admin._id, email, role: admin.role } });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-// Protected admin route example
-router.get('/dashboard', auth, isAdmin, (req, res) => {
-  res.json({ message: 'Welcome to admin dashboard' });
+    res.json({ message: 'Role updated', user: { id: user._id, email: user.email, role: user.role } });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
 });
 
 module.exports = router;

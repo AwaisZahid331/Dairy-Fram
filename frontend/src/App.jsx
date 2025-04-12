@@ -16,6 +16,10 @@ import Projects from "./Components/Projects";
 import ClientDashboard from "./Components/ClientDashboard"
 import ChatMessage from "./Components/ChatMessage";
 
+// Setting
+import Settings from "./Settings/Settings";
+import MemberRoles from "./Settings/MemberRoles";
+
 function App() {
   return (
     <Router>
@@ -35,6 +39,10 @@ function App() {
         <Route path="/projects" element= {<Projects/>}/>
         <Route path="/clientdashboard" element= {<ClientDashboard/>}/>
         <Route path="/chatmessage" element= {<ChatMessage/>}/>
+
+        
+        <Route path="/settings" element= {<Settings/>}/>
+        <Route path="/settings/memberroles" element={<MemberRoles/>}/>
 
 
         

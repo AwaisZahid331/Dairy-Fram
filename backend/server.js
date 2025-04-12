@@ -16,7 +16,8 @@ connectDB();
 // Routes
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/admin', require('./routes/admin'));
-
+app.use('/api/businesses', require('./routes/businessRoutes'));
+app.use('/api/roles', require('./routes/roleRoutes'));
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
