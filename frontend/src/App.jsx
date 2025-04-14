@@ -19,6 +19,10 @@ import ChatMessage from "./Components/ChatMessage";
 // Setting
 import Settings from "./Settings/Settings";
 import MemberRoles from "./Settings/MemberRoles";
+import Notifications from "./Settings/Notifications";
+import Permissions from "./Settings/Permissions";
+import DangerZone from "./Settings/DangerZone";
+
 
 function App() {
   return (
@@ -40,9 +44,15 @@ function App() {
         <Route path="/clientdashboard" element= {<ClientDashboard/>}/>
         <Route path="/chatmessage" element= {<ChatMessage/>}/>
 
-        
+        {/* Settings */}
         <Route path="/settings" element= {<Settings/>}/>
         <Route path="/settings/memberroles" element={<MemberRoles/>}/>
+        <Route path="/settings/notifications" element={<Notifications />} />
+        <Route path="/settings/permissions" element={<Permissions />} />
+        <Route path="/settings/dangerzone" element={<DangerZone />} />
+
+        {/* 404 page */}
+        <Route path="*" element={<div>404 Not Found</div>} />
 
 
         

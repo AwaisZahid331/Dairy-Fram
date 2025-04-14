@@ -139,29 +139,75 @@ const Settings = () => {
               },
             }}
           />
-          {['Notifications', 'Permissions', 'Danger Zone'].map((label, index) => (
-            <Tab
-              key={label}
-              label={label}
-              sx={{
-                textTransform: 'none',
-                fontSize: { xs: '0.9rem', md: '1rem' },
-                fontWeight: activeTab === index + 2 ? 'bold' : 'normal',
-                color: activeTab === index + 2 ? 'black' : '#B0BEC5',
-                backgroundColor: activeTab === index + 2 ? '#8BD4E7' : 'transparent',
-                borderRadius: '24px',
-                padding: '6px 16px',
-                border: '1px solid #000000',
-                marginRight: '8px',
-                '&:hover': {
-                  backgroundColor: activeTab === index + 2 ? '#8BD4E7' : '#E0E0E0',
-                },
-                '&.Mui-selected': {
-                  color: 'black',
-                },
-              }}
-            />
-          ))}
+          <Tab
+            label="Notifications"
+            component={Link}
+            to="/settings/notifications"
+            sx={{
+              textTransform: 'none',
+              fontSize: { xs: '0.9rem', md: '1rem' },
+              fontWeight: activeTab === 1 ? 'bold' : 'normal',
+              color: activeTab === 1 ? 'black' : '#B0BEC5',
+              backgroundColor: activeTab === 1 ? '#8BD4E7' : 'transparent',
+              borderRadius: '24px',
+              padding: '6px 16px',
+              border: '1px solid #000000',
+              marginRight: '8px',
+              '&:hover': {
+                backgroundColor: activeTab === 1 ? '#8BD4E7' : '#E0E0E0',
+              },
+              '&.Mui-selected': {
+                color: 'black',
+              },
+            }}
+          />
+          <Tab
+            label="Permissions"
+            component={Link}
+            to="/settings/permissions"
+            sx={{
+              textTransform: 'none',
+              fontSize: { xs: '0.9rem', md: '1rem' },
+              fontWeight: activeTab === 1 ? 'bold' : 'normal',
+              color: activeTab === 1 ? 'black' : '#B0BEC5',
+              backgroundColor: activeTab === 1 ? '#8BD4E7' : 'transparent',
+              borderRadius: '24px',
+              padding: '6px 16px',
+              border: '1px solid #000000',
+              marginRight: '8px',
+              '&:hover': {
+                backgroundColor: activeTab === 1 ? '#8BD4E7' : '#E0E0E0',
+              },
+              '&.Mui-selected': {
+                color: 'black',
+              },
+            }}
+          />
+          <Tab
+            label="Danger Zone"
+            component={Link}
+            to="/settings/dangerzone"
+            sx={{
+              textTransform: 'none',
+              fontSize: { xs: '0.9rem', md: '1rem' },
+              fontWeight: activeTab === 1 ? 'bold' : 'normal',
+              color: activeTab === 1 ? 'black' : '#B0BEC5',
+              backgroundColor: activeTab === 1 ? '#8BD4E7' : 'transparent',
+              borderRadius: '24px',
+              padding: '6px 16px',
+              border: '1px solid #000000',
+              marginRight: '8px',
+              '&:hover': {
+                backgroundColor: activeTab === 1 ? '#8BD4E7' : '#E0E0E0',
+              },
+              '&.Mui-selected': {
+                color: 'black',
+              },
+            }}
+          />
+          {/* {[ ].map((label, index) => (
+            
+          ))} */}
         </Tabs>
 
         {/* General Info Tab */}

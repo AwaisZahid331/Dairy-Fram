@@ -1,5 +1,23 @@
-import React from 'react';
-import { Box, Typography, Tabs, Tab, Table, TableHead, TableBody, TableRow, TableCell, Chip, IconButton } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Typography,
+  Tabs,
+  Tab,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Chip,
+  IconButton,
+  Tooltip,
+  Modal,
+  Select,
+  MenuItem,
+  FormControl,
+  Button,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import Sidebar from '../Components/Sidebar';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
@@ -7,6 +25,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ReplayIcon from '@mui/icons-material/Replay';
 
 const MemberRoles = () => {
+  // State for Modal
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
+
   // Data for Members & Roles table
   const membersData = [
     {
@@ -15,7 +38,7 @@ const MemberRoles = () => {
       email: 'ziauddin@emailinator.com',
       role: 'Super Admin',
       roleColor: '#AB47BC',
-      team: '-',
+      team: 'Haji Zaka Team',
       status: 'ACTIVE',
       statusColor: '#4CAF50',
       actions: [],
@@ -46,7 +69,8 @@ const MemberRoles = () => {
 
   // Handle actions
   const handleChangeRole = (email) => {
-    console.log(`Change role for ${email}`);
+    setSelectedEmail(email);
+    setOpenModal(true);
   };
 
   const handleRemove = (email) => {
@@ -55,6 +79,16 @@ const MemberRoles = () => {
 
   const handleResendInvite = (email) => {
     console.log(`Resend invite to ${email}`);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedRole('');
+  };
+
+  const handleConfirmRoleChange = () => {
+    console.log(`Role changed for ${selectedEmail} to ${selectedRole}`);
+    handleCloseModal();
   };
 
   return (
@@ -66,9 +100,9 @@ const MemberRoles = () => {
       <Box
         sx={{
           flex: 1,
-          marginLeft: { xs: '0px', md: '100px' },
-          marginTop: { xs: '60px', md: '80px' },
-          padding: { xs: '10px', sm: '20px', md: '50px' },
+          marginLeft: { xs: '0px', sm: '80px', md: '100px' },
+          marginTop: { xs: '60px', sm: '70px', md: '80px' },
+          padding: { xs: '10px', sm: '15px', md: '30px', lg: '50px' },
           backgroundColor: '#F5F7FA',
           overflowY: 'auto',
         }}
@@ -79,7 +113,7 @@ const MemberRoles = () => {
             variant="h1"
             sx={{
               color: 'black',
-              fontSize: { xs: '1.5rem', md: '2rem' },
+              fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' },
               fontWeight: 'bold',
             }}
           >
@@ -90,7 +124,7 @@ const MemberRoles = () => {
             sx={{
               color: 'black',
               mt: 0.5,
-              fontSize: { xs: '0.8rem', md: '0.875rem' },
+              fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.875rem' },
             }}
           >
             <Link
@@ -125,85 +159,60 @@ const MemberRoles = () => {
 
         {/* Tabs */}
         <Tabs
-          value={1} // Members & Roles tab is active
+          value={1} // Members & Roles tab is active (index 1)
           sx={{
             mb: 3,
             '& .MuiTabs-indicator': {
               backgroundColor: 'transparent',
             },
+            flexWrap: { xs: 'wrap', sm: 'nowrap' },
           }}
         >
-          <Tab
-            label="General Info"
-            component={Link}
-            to="/settings"
-            sx={{
-              textTransform: 'none',
-              fontSize: { xs: '0.9rem', md: '1rem' },
-              fontWeight: 'normal',
-              color: '#B0BEC5',
-              backgroundColor: 'transparent',
-              borderRadius: '24px',
-              padding: '6px 16px',
-              border: '1px solid #000000',
-              marginRight: '8px',
-              '&:hover': {
-                backgroundColor: '#E0E0E0',
-              },
-            }}
-          />
-          <Tab
-            label="Members & Roles"
-            sx={{
-              textTransform: 'none',
-              fontSize: { xs: '0.9rem', md: '1rem' },
-              fontWeight: 'bold',
-              color: 'black',
-              backgroundColor: '#8BD4E7',
-              borderRadius: '24px',
-              padding: '6px 16px',
-              border: '1px solid #000000',
-              marginRight: '8px',
-              '&:hover': {
-                backgroundColor: '#8BD4E7',
-              },
-              '&.Mui-selected': {
-                color: 'black',
-              },
-            }}
-          />
-          {['Notifications', 'Permissions', 'Danger Zone'].map((label, index) => (
+          {[
+            { label: 'General Info', path: '/settings' },
+            { label: 'Members & Roles', path: '/settings/members-roles' },
+            { label: 'Notifications', path: '/settings/notifications' },
+            { label: 'Permissions', path: '/settings/permissions' },
+            { label: 'Danger Zone', path: '/settings/dangerzone' },
+          ].map((tab, index) => (
             <Tab
-              key={label}
-              label={label}
+              key={tab.label}
+              label={tab.label}
+              component={Link}
+              to={tab.path}
               sx={{
                 textTransform: 'none',
-                fontSize: { xs: '0.9rem', md: '1rem' },
-                fontWeight: 'normal',
-                color: '#B0BEC5',
-                backgroundColor: 'transparent',
+                fontSize: { xs: '0.8rem', sm: '0.9rem', md: '1rem' },
+                fontWeight: index === 1 ? 'bold' : 'normal',
+                color: index === 1 ? 'black' : '#B0BEC5',
+                backgroundColor: index === 1 ? '#8BD4E7' : 'transparent',
                 borderRadius: '24px',
-                padding: '6px 16px',
+                padding: { xs: '4px 12px', md: '6px 16px' },
                 border: '1px solid #000000',
                 marginRight: '8px',
+                marginBottom: { xs: '8px', sm: 0 },
                 '&:hover': {
-                  backgroundColor: '#E0E0E0',
+                  backgroundColor: index === 1 ? '#8BD4E7' : '#E0E0E0',
+                },
+                '&.Mui-selected': {
+                  color: 'black',
                 },
               }}
             />
           ))}
         </Tabs>
 
-        {/* Members & Roles Table */}
+        {/* Members Table */}
         <Box
           sx={{
             backgroundColor: '#FFFFFF',
             border: '2px solid #8BD4E7',
             borderRadius: '12px',
-            p: 2,
-            width: { xs: '100%', md: '1450px' },
-            mx: 0,
-            mt: 2,
+            p: { xs: 1, sm: 2 },
+            width: '100%',
+            maxWidth: { xs: '100%', md: '1450px' },
+            mx: 'auto',
+            overflowX: 'auto',
           }}
         >
           <Table>
@@ -215,11 +224,12 @@ const MemberRoles = () => {
                     sx={{
                       backgroundColor: '#8BD4E7',
                       fontWeight: 'bold',
-                      fontSize: { xs: '0.9rem', md: '1rem' },
+                      fontSize: { xs: '0.8rem', sm: '0.9rem', md: '1rem' },
                       color: 'black',
                       borderBottom: '1px solid #CACACA',
-                      padding: '10px',
+                      padding: { xs: '6px', sm: '8px', md: '10px' },
                       textAlign: header === 'Actions' ? 'center' : 'left',
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     {header}
@@ -231,18 +241,18 @@ const MemberRoles = () => {
               {membersData.map((member, index) => (
                 <TableRow key={index}>
                   {/* Name */}
-                  <TableCell sx={{ padding: '10px', borderBottom: '1px solid #CACACA' }}>
+                  <TableCell sx={{ padding: { xs: '6px', sm: '8px', md: '10px' }, borderBottom: '1px solid #CACACA' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <Box
                         sx={{
-                          width: '30px',
-                          height: '30px',
+                          width: { xs: '24px', md: '30px' },
+                          height: { xs: '24px', md: '30px' },
                           borderRadius: '50%',
                           backgroundColor: '#E0E0E0',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: '0.9rem',
+                          fontSize: { xs: '0.7rem', md: '0.9rem' },
                           fontWeight: 'bold',
                           color: 'black',
                           mr: 1,
@@ -250,21 +260,21 @@ const MemberRoles = () => {
                       >
                         {member.name}
                       </Box>
-                      <Typography sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
+                      <Typography sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem', md: '1rem' }, whiteSpace: 'nowrap' }}>
                         {member.fullName}
                       </Typography>
                     </Box>
                   </TableCell>
 
                   {/* Email */}
-                  <TableCell sx={{ padding: '10px', borderBottom: '1px solid #CACACA' }}>
-                    <Typography sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
+                  <TableCell sx={{ padding: { xs: '6px', sm: '8px', md: '10px' }, borderBottom: '1px solid #CACACA' }}>
+                    <Typography sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem', md: '1rem' }, whiteSpace: 'nowrap' }}>
                       {member.email}
                     </Typography>
                   </TableCell>
 
                   {/* Role */}
-                  <TableCell sx={{ padding: '10px', borderBottom: '1px solid #CACACA' }}>
+                  <TableCell sx={{ padding: { xs: '6px', sm: '8px', md: '10px' }, borderBottom: '1px solid #CACACA' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <Box
                         sx={{
@@ -275,52 +285,58 @@ const MemberRoles = () => {
                           mr: 1,
                         }}
                       />
-                      <Typography sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
+                      <Typography sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem', md: '1rem' }, whiteSpace: 'nowrap' }}>
                         {member.role}
                       </Typography>
                     </Box>
                   </TableCell>
 
                   {/* Team(s) */}
-                  <TableCell sx={{ padding: '10px', borderBottom: '1px solid #CACACA' }}>
-                    <Typography sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
+                  <TableCell sx={{ padding: { xs: '6px', sm: '8px', md: '10px' }, borderBottom: '1px solid #CACACA' }}>
+                    <Typography sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem', md: '1rem' }, whiteSpace: 'nowrap' }}>
                       {member.team}
                     </Typography>
                   </TableCell>
 
                   {/* Status */}
-                  <TableCell sx={{ padding: '10px', borderBottom: '1px solid #CACACA' }}>
+                  <TableCell sx={{ padding: { xs: '6px', sm: '8px', md: '10px' }, borderBottom: '1px solid #CACACA' }}>
                     <Chip
                       label={member.status}
                       sx={{
                         backgroundColor: member.statusColor,
                         color: 'white',
-                        fontSize: '0.8rem',
+                        fontSize: { xs: '0.7rem', sm: '0.8rem' },
                         fontWeight: 'bold',
                         borderRadius: '12px',
-                        height: '24px',
+                        height: { xs: '20px', sm: '24px' },
                       }}
                     />
                   </TableCell>
 
                   {/* Actions */}
-                  <TableCell sx={{ padding: '10px', borderBottom: '1px solid #CACACA', textAlign: 'center' }}>
+                  <TableCell sx={{ padding: { xs: '6px', sm: '8px', md: '10px' }, borderBottom: '1px solid #CACACA', textAlign: 'center' }}>
                     {member.actions.length > 0 ? (
-                      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'center', gap: { xs: 0.5, sm: 1 } }}>
                         {member.actions.includes('Change Role') && (
-                          <IconButton onClick={() => handleChangeRole(member.email)}>
-                            <ChangeCircleIcon sx={{ fontSize: '1.2rem', color: '#1976D2' }} />
-                          </IconButton>
+                          <Tooltip title="Change Role" arrow>
+                            <IconButton onClick={() => handleChangeRole(member.email)}>
+                              <ChangeCircleIcon sx={{ fontSize: { xs: '1rem', sm: '1.2rem' }, color: '#1976D2' }} />
+                            </IconButton>
+                          </Tooltip>
                         )}
                         {member.actions.includes('Remove') && (
-                          <IconButton onClick={() => handleRemove(member.email)}>
-                            <DeleteIcon sx={{ fontSize: '1.2rem', color: '#F44336' }} />
-                          </IconButton>
+                          <Tooltip title="Remove" arrow>
+                            <IconButton onClick={() => handleRemove(member.email)}>
+                              <DeleteIcon sx={{ fontSize: { xs: '1rem', sm: '1.2rem' }, color: '#F44336' }} />
+                            </IconButton>
+                          </Tooltip>
                         )}
                         {member.actions.includes('Resend Invite') && (
-                          <IconButton onClick={() => handleResendInvite(member.email)}>
-                            <ReplayIcon sx={{ fontSize: '1.2rem', color: '#4CAF50' }} />
-                          </IconButton>
+                          <Tooltip title="Resend Invite" arrow>
+                            <IconButton onClick={() => handleResendInvite(member.email)}>
+                              <ReplayIcon sx={{ fontSize: { xs: '1rem', sm: '1.2rem' }, color: '#4CAF50' }} />
+                            </IconButton>
+                          </Tooltip>
                         )}
                       </Box>
                     ) : (
@@ -332,6 +348,84 @@ const MemberRoles = () => {
             </TableBody>
           </Table>
         </Box>
+
+        {/* Change Role Modal */}
+        <Modal
+          open={openModal}
+          onClose={handleCloseModal}
+          aria-labelledby="change-role-modal"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: 'white',
+              borderRadius: '8px',
+              border: '2px solid #000',
+              boxShadow: 24,
+              p: { xs: 2, sm: 3 },
+              width: { xs: '90%', sm: '400px' },
+              maxWidth: '500px',
+            }}
+          >
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+              <Typography id="change-role-modal" variant="h6" sx={{ fontWeight: 'bold', fontSize: { xs: '1rem', sm: '1.25rem' } }}>
+                Change Role
+              </Typography>
+              <IconButton onClick={handleCloseModal}>
+                <Typography sx={{ fontSize: { xs: '1rem', sm: '1.25rem' }, fontWeight: 'bold' }}>×</Typography>
+              </IconButton>
+            </Box>
+
+            <FormControl fullWidth sx={{ mb: 2 }}>
+              <Select
+                value={selectedRole}
+                onChange={(e) => setSelectedRole(e.target.value)}
+                displayEmpty
+                sx={{
+                  borderRadius: '24px',
+                  border: '1px solid #000',
+                  height: { xs: '40px', sm: '48px' },
+                  fontSize: { xs: '0.9rem', sm: '1rem' },
+                }}
+              >
+                <MenuItem value="" disabled>
+                  Select
+                </MenuItem>
+                <MenuItem value="Super Admin">Super Admin</MenuItem>
+                <MenuItem value="Admin">Admin</MenuItem>
+                <MenuItem value="Client">Client</MenuItem>
+                <MenuItem value="Employee">Employee</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Button
+              onClick={handleConfirmRoleChange}
+              disabled={!selectedRole}
+              sx={{
+                backgroundColor: '#8BD4E7',
+                color: 'black',
+                borderRadius: '24px',
+                padding: { xs: '6px 12px', sm: '8px 16px' },
+                fontSize: { xs: '0.9rem', sm: '1rem' },
+                fontWeight: 'bold',
+                width: { xs: '100%', sm: 'auto' },
+                '&:hover': {
+                  backgroundColor: '#72C3D8',
+                },
+                '&:disabled': {
+                  backgroundColor: '#B0BEC5',
+                  color: 'black',
+                },
+              }}
+            >
+              CONFIRM
+            </Button>
+          </Box>
+        </Modal>
       </Box>
     </Box>
   );
