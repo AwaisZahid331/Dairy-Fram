@@ -27,6 +27,7 @@ app.use('/api/permissions', require('./routes/permissionRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/project-memberships', require('./routes/projectMembershipRoutes'));
 app.use('/api/chat-messages', require('./routes/chatMessageRoutes'));
+app.use('/api/milestones', require('./routes/milestoneRoutes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
