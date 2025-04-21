@@ -51,35 +51,43 @@ const LoginPage = () => {
         email: formData.email,
         password: formData.password,
       });
+      
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('userId', res.data.user.id);
       setError('');
-      navigate('/dashboard'); // Redirect to dashboard after login
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
   };
 
   return (
-    <Box sx={{ height: '100vh', display: 'flex' }}>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        boxSizing: 'border-box',
+      }}
+    >
       {/* Left Side */}
       <Box
         sx={{
-          flex: 1,
+          flex: { xs: 0, md: 1 },
+          display: { xs: 'none', md: 'flex' },
           backgroundColor: '#000033',
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
-          padding: '2px',
-          position: 'relative',
+          padding: { xs: '1px', md: '2px' },
         }}
       >
         <Box
           sx={{
             color: 'white',
-            marginBottom: '3rem',
+            marginBottom: '2rem',
             padding: '1rem',
             display: 'flex',
             flexDirection: 'column',
@@ -87,13 +95,26 @@ const LoginPage = () => {
             textAlign: 'center',
           }}
         >
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', fontSize: '1.25rem', marginBottom: '0.5rem' }}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            sx={{
+              fontWeight: 'bold',
+              fontSize: { xs: '1rem', md: '1.25rem' },
+              marginBottom: '0.5rem',
+            }}
+          >
             Tips
           </Typography>
-          <Typography variant="body2" sx={{ opacity: 0.8, fontSize: '0.875rem', lineHeight: 1.5 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              opacity: 0.8,
+              fontSize: { xs: '0.75rem', md: '0.875rem' },
+              lineHeight: 1.5,
+            }}
+          >
             Lorem ipsum dolor sit amet consectetur. Vestibulum sit in cras
-            tincidunt eget viverra tortor mus placerat elit. Libero amet odio
-            lobortis commodo sapien purus eget. Porta ultrices.
             tincidunt eget viverra tortor mus placerat elit. Libero amet odio
             lobortis commodo sapien purus eget. Porta ultrices.
           </Typography>
@@ -103,23 +124,45 @@ const LoginPage = () => {
       {/* Right Side */}
       <Box
         sx={{
-          flex: 1,
+          flex: { xs: 1, md: 1 },
+          width: '100%',
           backgroundColor: '#FFFFFF',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          padding: '1rem',
+          alignItems: 'center',
+          padding: { xs: '16px', md: '1rem' },
+          minHeight: { xs: '100vh', md: 'auto' },
+          boxSizing: 'border-box',
         }}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'space-evenly', marginBottom: '6rem' }}>
-          <FormControl variant="outlined" size="small" sx={{ width: '200px' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            justifyContent: { xs: 'center', md: 'space-between' },
+            alignItems: { xs: 'center', md: 'center' },
+            marginBottom: { xs: '2rem', md: '4rem' },
+            width: '100%',
+            maxWidth: { xs: '400px', md: '510px' },
+            gap: { xs: 1, md: 0 },
+          }}
+        >
+          <FormControl
+            variant="outlined"
+            size="small"
+            sx={{
+              width: { xs: '100%', md: '200px' },
+              maxWidth: '200px',
+            }}
+          >
             <Select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
               displayEmpty
               sx={{
-                height: '40px',
-                fontSize: '0.875rem',
+                height: { xs: '36px', md: '40px' },
+                fontSize: { xs: '0.75rem', md: '0.875rem' },
                 borderRadius: '8px',
                 '& .MuiOutlinedInput-notchedOutline': {
                   borderColor: '#e0e0e0',
@@ -139,7 +182,15 @@ const LoginPage = () => {
               <MenuItem value={'French'}>French</MenuItem>
             </Select>
           </FormControl>
-          <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography
+            variant="body2"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: { xs: '0.75rem', md: '0.875rem' },
+              mt: { xs: 1, md: 0 },
+            }}
+          >
             Don't have an account?{' '}
             <Button
               variant="contained"
@@ -148,9 +199,9 @@ const LoginPage = () => {
                 textTransform: 'none',
                 backgroundColor: '#8BD4E7',
                 color: 'black',
-                fontSize: '0.875rem',
+                fontSize: { xs: '0.75rem', md: '0.875rem' },
                 borderRadius: '20px',
-                padding: '6px 30px',
+                padding: { xs: '4px 20px', md: '6px 30px' },
                 boxShadow: 'none',
                 '&:hover': {
                   backgroundColor: '#8BD4E7',
@@ -168,64 +219,85 @@ const LoginPage = () => {
         <Paper
           elevation={0}
           sx={{
-            padding: '2rem',
-            maxWidth: '510px',
-            margin: '0 auto',
+            padding: { xs: '1rem', md: '2rem' },
+            width: '100%',
+            maxWidth: { xs: '100%', sm: '400px', md: '510px' },
             border: '0.5px solid #66666659',
-            borderRadius: '18px',
+            borderRadius: '12px',
+            boxSizing: 'border-box',
           }}
         >
-          <Box sx={{ textAlign: 'center', marginBottom: '1rem' }}>
+          <Box sx={{ textAlign: 'center', marginBottom: { xs: '3rem', md: '1rem' } }}>
             <Box
               component="div"
               sx={{
-                width: '50px',
-                height: '50px',
+                width: { xs: '40px', md: '50px' },
+                height: { xs: '40px', md: '50px' },
                 backgroundColor: '#8BD4E7',
                 borderRadius: '50%',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                margin: '0 auto 1rem',
+                margin: '0 auto 2rem',
               }}
             >
               <Box
                 component="div"
                 sx={{
-                  width: '20px',
-                  height: '20px',
+                  width: { xs: '16px', md: '20px' },
+                  height: { xs: '16px', md: '20px' },
                   backgroundColor: '#8BD4E7',
                   borderRadius: '50%',
                 }}
               />
             </Box>
-            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', fontSize: '1.5rem', color: '#333' }}>
+            <Typography
+              variant="h5"
+              gutterBottom
+              sx={{
+                fontWeight: 'bold',
+                fontSize: { xs: '1.25rem', md: '1.5rem' },
+                color: '#333',
+              }}
+            >
               Login
             </Typography>
-            <Typography variant="body2" sx={{ color: '#666', fontSize: '0.875rem' }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: '#666',
+                fontSize: { xs: '0.75rem', md: '0.875rem' },
+              }}
+            >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis
-              maximus. Lorem ipsum dolor sit amet,
+              maximus.
             </Typography>
             {error && (
-              <Typography variant="body2" sx={{ color: 'red', mt: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: 'red',
+                  mt: 0.5,
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
+                }}
+              >
                 {error}
               </Typography>
             )}
           </Box>
 
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 0 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={{ xs: 1, md: 2 }}>
               <Grid item xs={12}>
                 <FormControl fullWidth sx={{ mb: 0 }}>
                   <InputLabel
                     shrink
                     sx={{
-                      fontSize: '0.875rem',
+                      fontSize: { xs: '0.75rem', md: '0.875rem' },
                       color: '#666',
                       position: 'static',
                       transform: 'none',
-                      mb: 0.5,
-                      width: '505px',
+                      mb: 0.25,
                     }}
                   >
                     Email
@@ -242,6 +314,7 @@ const LoginPage = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: '8px',
+                        width:"360px",
                         '& fieldset': {
                           borderColor: '#e0e0e0',
                         },
@@ -253,7 +326,8 @@ const LoginPage = () => {
                         },
                       },
                       '& .MuiInputBase-input': {
-                        fontSize: '0.875rem',
+                        fontSize: { xs: '0.75rem', md: '0.875rem' },
+                        padding: { xs: '10px', md: '12px' },
                       },
                     }}
                   />
@@ -264,12 +338,11 @@ const LoginPage = () => {
                   <InputLabel
                     shrink
                     sx={{
-                      fontSize: '0.875rem',
+                      fontSize: { xs: '0.75rem', md: '0.875rem' },
                       color: '#666',
                       position: 'static',
                       transform: 'none',
-                      mb: 0.5,
-                      width: '505px',
+                      mb: 0.25,
                     }}
                   >
                     Password
@@ -287,6 +360,7 @@ const LoginPage = () => {
                     sx={{
                       '& .MuiOutlinedInput-root': {
                         borderRadius: '8px',
+                        width:"360px",
                         '& fieldset': {
                           borderColor: '#e0e0e0',
                         },
@@ -298,7 +372,8 @@ const LoginPage = () => {
                         },
                       },
                       '& .MuiInputBase-input': {
-                        fontSize: '0.875rem',
+                        fontSize: { xs: '0.75rem', md: '0.875rem' },
+                        padding: { xs: '10px', md: '12px' },
                       },
                     }}
                     InputProps={{
@@ -309,8 +384,17 @@ const LoginPage = () => {
                             onClick={() => setShowPassword(!showPassword)}
                             onMouseDown={handleMouseDownPassword}
                             edge="end"
+                            sx={{ padding: { xs: '4px', md: '8px' } }}
                           >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                            {showPassword ? (
+                              <VisibilityOff
+                                sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}
+                              />
+                            ) : (
+                              <Visibility
+                                sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}
+                              />
+                            )}
                           </IconButton>
                         </InputAdornment>
                       ),
@@ -331,21 +415,33 @@ const LoginPage = () => {
                     '&.Mui-checked': {
                       color: '#1976d2',
                     },
+                    transform: { xs: 'scale(0.9)', md: 'scale(1)' },
+                    padding: { xs: '4px', md: '8px' },
                   }}
                 />
               }
               label={
-                <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: { xs: '0.75rem', md: '0.875rem' } }}
+                >
                   By logging in, I agree to our{' '}
-                  <Link to="#" color="#1976d2" sx={{ textDecoration: 'none', color: "black" }}>
+                  <Link
+                    to="#"
+                    style={{ textDecoration: 'none', color: '#1976d2' }}
+                  >
                     Terms of use
                   </Link>{' '}
                   and{' '}
-                  <Link to="#" color="#1976d2" sx={{ textDecoration: 'none' }}>
+                  <Link
+                    to="#"
+                    style={{ textDecoration: 'none', color: '#1976d2' }}
+                  >
                     Privacy Policy
                   </Link>
                 </Typography>
               }
+              sx={{ mt: 1 }}
             />
 
             <Button
@@ -353,23 +449,33 @@ const LoginPage = () => {
               fullWidth
               variant="contained"
               sx={{
-                mt: 0,
+                mt: 1,
                 mb: 0,
                 backgroundColor: '#8BD4E7',
                 textTransform: 'none',
-                fontSize: '1rem',
+                fontSize: { xs: '0.875rem', md: '1rem' },
                 fontWeight: 500,
                 borderRadius: '25px',
                 boxShadow: 'none',
-                py: 1.5,
+                py: { xs: 1, md: 1.5 },
                 color: 'black',
               }}
             >
               Login
             </Button>
 
-            <Typography variant="body2" sx={{ textAlign: 'left', mt: 2 }}>
-              <Link to="/forgotpassword" style={{ textDecoration: 'none', color: '#3F98AF', fontWeight: 'bold' }}>
+            <Typography
+              variant="body2"
+              sx={{
+                textAlign: 'left',
+                mt: 1,
+                fontSize: { xs: '0.75rem', md: '0.875rem' },
+              }}
+            >
+              <Link
+                to="/forgotpassword"
+                style={{ textDecoration: 'none', color: '#3F98AF', fontWeight: 'bold' }}
+              >
                 Forgot password?
               </Link>
             </Typography>

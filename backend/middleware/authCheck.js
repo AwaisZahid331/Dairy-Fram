@@ -25,4 +25,12 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = { auth, isAdmin };
+// isAdminOrSuperadmin middleware: Checks for admin or superadmin role
+const isAdminOrSuperadmin = (req, res, next) => {
+  if (!req.user || !['admin', 'superadmin'].includes(req.user.role)) {
+    return res.status(403).json({ message: 'Admin or superadmin access required' });
+  }
+  next();
+};
+
+module.exports = { auth, isAdmin, isAdminOrSuperadmin };

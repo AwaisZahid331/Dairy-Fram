@@ -17,7 +17,6 @@ const transporter = nodemailer.createTransport({
 
 // Store OTPs temporarily
 const otpStore = {};
-
 // Generate 6-digit OTP
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -86,6 +85,7 @@ exports.login = async (req, res) => {
       { expiresIn: '1h' }
     );
 
+    console.log('Generated JWT Token:', token);
     res.json({
       token,
       user: { id: user._id, fullName: user.fullName, email, role: user.role },

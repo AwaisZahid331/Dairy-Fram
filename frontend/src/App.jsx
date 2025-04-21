@@ -53,9 +53,6 @@ function App() {
 
         {/* 404 page */}
         <Route path="*" element={<div>404 Not Found</div>} />
-
-
-        
         
       </Routes>
     </Router>

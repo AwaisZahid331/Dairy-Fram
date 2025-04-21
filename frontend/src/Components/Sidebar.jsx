@@ -37,29 +37,29 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       {/* Top Navbar */}
       <Box
         sx={{
           width: "100%",
-          height: { xs: "60px", md: "80px" },
+          height: { xs: "56px", sm: "64px", md: "80px" },
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: { xs: "0 10px", md: "0 30px" },
+          padding: { xs: "0 8px", sm: "0 16px", md: "0 30px" },
           bgcolor: "white",
           position: "fixed",
           top: 0,
           left: 0,
-          zIndex: 1000,
+          zIndex: 1200,
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, md: 1 } }}>
           <Box
             sx={{
-              width: { xs: "40px", md: "55px" },
-              height: { xs: "40px", md: "55px" },
-              marginLeft: "-12px",
+              width: { xs: "32px", sm: "40px", md: "55px" },
+              height: { xs: "32px", sm: "40px", md: "55px" },
               borderRadius: "50%",
               display: "flex",
               justifyContent: "center",
@@ -69,7 +69,7 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
             <img 
               src={logo} 
               alt="Logo" 
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+              style={{ width: "100%", height: "100%", objectFit: "contain" }} 
             />
           </Box>
         </Box>
@@ -77,48 +77,43 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
         <Box
           sx={{
             flex: 1,
-            display: { xs: "none", sm: "none", md: "flex" },
+            display: { xs: "none", md: "flex" },
             justifyContent: "center",
           }}
         >
           <TextField
             placeholder="Search"
             variant="outlined"
-            size="large"
+            size="small"
             InputProps={{
               endAdornment: (
                 <Box
                   sx={{
                     backgroundColor: "#8BD4E7",
                     borderRadius: "50%",
-                    padding: { xs: "6px", md: "8px" },
+                    padding: { xs: "4px", md: "6px" },
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
-                    marginLeft: "15px",
                   }}
                 >
-                  <Search sx={{ color: "black", fontSize: { xs: "24px", md: "30px" } }} />
+                  <Search sx={{ color: "black", fontSize: { xs: "20px", md: "24px" } }} />
                 </Box>
               ),
             }}
             sx={{
-              width: { sm: "300px", md: "450px" },
-              marginTop: "11px",
-              marginLeft: { sm: "50px", md: "150px" },
-              backgroundColor: "#FFFFFF",
-              borderRadius: "50px",
+              width: { sm: "250px", md: "400px" },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": { borderColor: "#E5E7EB", borderRadius: "50px" },
-                "&:hover fieldset": { borderColor: "#D1D5DB", borderRadius: "50px" },
-                "&.Mui-focused fieldset": { borderColor: "#3B82F6", borderRadius: "50px" },
-                height: { xs: "50px", md: "60px" },
+                "&:hover fieldset": { borderColor: "#D1D5DB" },
+                "&.Mui-focused fieldset": { borderColor: "#3B82F6" },
+                height: { xs: "40px", md: "48px" },
                 borderRadius: "50px",
               },
               "& .MuiInputBase-input": {
-                padding: { xs: "8px 12px", md: "12px 16px" },
-                fontSize: { xs: "14px", md: "17px" },
+                padding: { xs: "8px 12px", md: "10px 14px" },
+                fontSize: { xs: "0.85rem", md: "1rem" },
               },
             }}
           />
@@ -128,13 +123,13 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: { xs: 1, md: 2 },
-            marginRight: { xs: "10px", md: "50px" },
+            gap: { xs: 0.5, sm: 1, md: 1.5 },
+            marginRight: { xs: "8px", sm: "12px", md: "16px" }, // Increased margin-right
           }}
         >
-          <IconButton onClick={handleChatClick} sx={{ border: "1px solid #E5E7EB", borderRadius: "50%", padding: "6px" }}>
+          <IconButton onClick={handleChatClick} sx={{ padding: "4px" }}>
             <Badge badgeContent={notifications.length} color="error">
-              <Chat sx={{ color: "#9CA3AF", fontSize: { xs: "1.2rem", md: "1.5rem" } }} />
+              <Chat sx={{ color: "#9CA3AF", fontSize: { xs: "20px", md: "24px" } }} />
             </Badge>
           </IconButton>
 
@@ -144,16 +139,17 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
             onClose={handleClose}
             PaperProps={{ 
               sx: { 
-                maxHeight: '300px', 
-                width: '320px', 
-                borderRadius: '12px', 
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)', 
-                bgcolor: '#fff' 
+                maxHeight: "300px", 
+                width: { xs: "90vw", sm: "300px", md: "320px" }, 
+                maxWidth: "320px",
+                borderRadius: "12px", 
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)", 
+                bgcolor: "#fff" 
               } 
             }}
           >
             {notifications.length === 0 ? (
-              <MenuItem sx={{ justifyContent: 'center', color: '#666', fontStyle: 'italic' }}>
+              <MenuItem sx={{ justifyContent: "center", color: "#666", fontStyle: "italic", fontSize: { xs: "0.8rem", md: "0.9rem" } }}>
                 No new messages
               </MenuItem>
             ) : (
@@ -165,30 +161,30 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
                     handleClose();
                   }}
                   sx={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: 1.5, 
-                    py: 1.5, 
-                    px: 2, 
-                    borderBottom: index < notifications.length - 1 ? '1px solid #eee' : 'none',
-                    '&:hover': { bgcolor: '#f5f7fa' }
+                    display: "flex", 
+                    alignItems: "center", 
+                    gap: 1, 
+                    py: 1, 
+                    px: 1.5, 
+                    borderBottom: index < notifications.length - 1 ? "1px solid #eee" : "none",
+                    "&:hover": { bgcolor: "#f5f7fa" }
                   }}
                 >
                   <Avatar 
                     src={notif.avatar} 
                     sx={{ 
-                      width: 32, 
-                      height: 32, 
-                      border: '2px solid #8BD4E7' 
+                      width: { xs: 28, md: 32 }, 
+                      height: { xs: 28, md: 32 }, 
+                      border: "2px solid #8BD4E7" 
                     }} 
                   />
                   <Box sx={{ flex: 1 }}>
                     <Typography 
                       variant="body2" 
                       sx={{ 
-                        fontWeight: 'bold', 
-                        color: '#333', 
-                        fontSize: '0.95rem' 
+                        fontWeight: "bold", 
+                        color: "#333", 
+                        fontSize: { xs: "0.85rem", md: "0.95rem" } 
                       }}
                     >
                       {notif.sender}
@@ -196,24 +192,24 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
                     <Typography 
                       variant="body2" 
                       sx={{ 
-                        color: '#555', 
-                        fontSize: '0.9rem' 
+                        color: "#555", 
+                        fontSize: { xs: "0.8rem", md: "0.9rem" } 
                       }}
                     >
-                      {notif.type === 'Direct Messages' 
-                        ? notif.message.substring(0, 25) + '...' 
-                        : `${notif.chatName} - ${notif.message.substring(0, 20)}...`}
+                      {notif.type === "Direct Messages" 
+                        ? notif.message.substring(0, 20) + "..." 
+                        : `${notif.chatName} - ${notif.message.substring(0, 15)}...`}
                     </Typography>
                     <Typography 
                       variant="caption" 
                       sx={{ 
-                        color: '#888', 
-                        fontSize: '0.75rem', 
-                        display: 'block', 
+                        color: "#888", 
+                        fontSize: { xs: "0.65rem", md: "0.75rem" }, 
+                        display: "block", 
                         mt: 0.5 
                       }}
                     >
-                      {notif.type === 'Direct Messages' ? 'Direct Message' : 'Group Chat'} • {timeAgo(notif.timestamp)}
+                      {notif.type === "Direct Messages" ? "Direct Message" : "Group Chat"} • {timeAgo(notif.timestamp)}
                     </Typography>
                   </Box>
                 </MenuItem>
@@ -221,14 +217,15 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
             )}
           </Menu>
 
-          <IconButton onClick={handleNotificationClick} sx={{ padding: "6px" }}>
+          <IconButton onClick={handleNotificationClick} sx={{ padding: "4px" }}>
             <Badge badgeContent={notifications.length} color="error">
               <Notifications
                 sx={{
                   color: "#9CA3AF",
-                  fontSize: { xs: "1.2rem", md: "1.5rem" },
+                  fontSize: { xs: "20px", md: "24px" },
                   border: "1px solid #28272F",
-                  borderRadius: "10px",
+                  borderRadius: "8px",
+                  p: "2px",
                 }}
               />
             </Badge>
@@ -240,16 +237,17 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
             onClose={handleClose}
             PaperProps={{ 
               sx: { 
-                maxHeight: '300px', 
-                width: '350px', 
-                borderRadius: '12px', 
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)', 
-                bgcolor: '#fff' 
+                maxHeight: "300px", 
+                width: { xs: "90vw", sm: "320px", md: "350px" }, 
+                maxWidth: "350px",
+                borderRadius: "12px", 
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)", 
+                bgcolor: "#fff" 
               } 
             }}
           >
             {notifications.length === 0 ? (
-              <MenuItem sx={{ justifyContent: 'center', color: '#666', fontStyle: 'italic' }}>
+              <MenuItem sx={{ justifyContent: "center", color: "#666", fontStyle: "italic", fontSize: { xs: "0.8rem", md: "0.9rem" } }}>
                 No new notifications
               </MenuItem>
             ) : (
@@ -261,30 +259,30 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
                     handleClose();
                   }}
                   sx={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: 1.5, 
-                    py: 1.5, 
-                    px: 2, 
-                    borderBottom: index < notifications.length - 1 ? '1px solid #eee' : 'none',
-                    '&:hover': { bgcolor: '#f5f7fa' }
+                    display: "flex", 
+                    alignItems: "center", 
+                    gap: 1, 
+                    py: 1, 
+                    px: 1.5, 
+                    borderBottom: index < notifications.length - 1 ? "1px solid #eee" : "none",
+                    "&:hover": { bgcolor: "#f5f7fa" }
                   }}
                 >
                   <Avatar 
                     src={notif.avatar} 
                     sx={{ 
-                      width: 32, 
-                      height: 32, 
-                      border: '2px solid #8BD4E7' 
+                      width: { xs: 28, md: 32 }, 
+                      height: { xs: 28, md: 32 }, 
+                      border: "2px solid #8BD4E7" 
                     }} 
                   />
                   <Box sx={{ flex: 1 }}>
                     <Typography 
                       variant="body2" 
                       sx={{ 
-                        fontWeight: '500', 
-                        color: '#333', 
-                        fontSize: '0.95rem' 
+                        fontWeight: "500", 
+                        color: "#333", 
+                        fontSize: { xs: "0.85rem", md: "0.95rem" } 
                       }}
                     >
                       {notif.action}
@@ -292,8 +290,8 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
                     <Typography 
                       variant="body2" 
                       sx={{ 
-                        color: '#555', 
-                        fontSize: '0.9rem', 
+                        color: "#555", 
+                        fontSize: { xs: "0.8rem", md: "0.9rem" }, 
                         mt: 0.25 
                       }}
                     >
@@ -302,9 +300,9 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
                     <Typography 
                       variant="caption" 
                       sx={{ 
-                        color: '#888', 
-                        fontSize: '0.75rem', 
-                        display: 'block', 
+                        color: "#888", 
+                        fontSize: { xs: "0.65rem", md: "0.75rem" }, 
+                        display: "block", 
                         mt: 0.5 
                       }}
                     >
@@ -321,22 +319,22 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 1,
+                gap: 0.5,
                 border: "1px solid #E5E7EB",
-                borderRadius: "20px",
-                padding: "6px",
+                borderRadius: "16px",
+                padding: { xs: "4px", md: "6px" },
               }}
             >
               <Avatar
-                sx={{ width: { xs: "24px", md: "32px" }, height: { xs: "24px", md: "32px" } }}
+                sx={{ width: { xs: "20px", sm: "24px", md: "32px" }, height: { xs: "20px", sm: "24px", md: "32px" } }}
                 src="https://randomuser.me/api/portraits/men/1.jpg"
                 alt="Profile"
               />
               <Box sx={{ display: { xs: "none", sm: "flex" }, flexDirection: "column" }}>
-                <Typography sx={{ color: "#1F2937", fontSize: "14px", fontWeight: "500" }}>
+                <Typography sx={{ color: "#1F2937", fontSize: { xs: "0.75rem", md: "0.875rem" }, fontWeight: "500" }}>
                   Motive N.
                 </Typography>
-                <Typography sx={{ color: "#9CA3AF", fontSize: "12px" }}>
+                <Typography sx={{ color: "#9CA3AF", fontSize: { xs: "0.65rem", md: "0.75rem" } }}>
                   @motiveN
                 </Typography>
               </Box>
@@ -350,26 +348,28 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
       <Box
         sx={{
           width: { xs: "70px", sm: "90px", md: "100px" },
-          height: "130vh",
+          height: { xs: "auto", md: "100vh" },
           position: "fixed",
-          top: 0,
+          top: { xs: "50%", md: 0 },
+          transform: { xs: "translateY(-50%)", md: "none" },
           left: 0,
-          zIndex: 1000,
+          zIndex: 1100,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: { xs: "center", md: "flex-start" },
           boxSizing: "border-box",
         }}
       >
         <Box
           sx={{
-            marginTop: { xs: "70px", md: "180px" },
-            width: { xs: "50px", sm: "70px", md: "70px" },
-            maxHeight: { xs: "69vh", md: "69vh" },
+            marginTop: { xs: "0", md: "100px" },
+            width: { xs: "60px", sm: "70px", md: "80px" },
+            maxHeight: { xs: "50vh", md: "70vh" }, // Increased height on mobile
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            padding: { xs: "10px 0", md: "7px 0" },
+            padding: { xs: "8px 0", sm: "10px 0", md: "12px 0" }, // Adjusted padding
             bgcolor: "white",
             boxShadow: "2px 0 5px rgba(0, 0, 0, 0.12)",
             borderRadius: "30px",
@@ -378,87 +378,92 @@ const Sidebar = ({ notifications = [], onNotificationClick }) => {
         >
           <Link to="/dashboard">
             <IconButton
-              style={{
+              sx={{
                 borderRadius: "50%",
-                backgroundColor: location.pathname === "/dashboard" ? "#8BD4E7" : "transparent",
-                marginBottom: "0px",
+                bgcolor: location.pathname === "/dashboard" ? "#8BD4E7" : "transparent",
+                mb: { xs: 0.5, md: 1 },
+                p: { xs: "6px", md: "8px" },
               }}
             >
-              <Dashboard sx={{ fontSize: { xs: "24px", md: "30px" }, color: location.pathname === "/dashboard" ? "black" : "#9CA3AF" }} />
+              <Dashboard sx={{ fontSize: { xs: "20px", md: "28px" }, color: location.pathname === "/dashboard" ? "black" : "#9CA3AF" }} />
             </IconButton>
           </Link>
 
-          <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 2, md: 2.5 } }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 0.5, md: 1 } }}>
             <Link to="/members">
               <IconButton
-                style={{
-                  backgroundColor: location.pathname === "/members" ? "#8BD4E7" : "transparent",
+                sx={{
+                  bgcolor: location.pathname === "/members" ? "#8BD4E7" : "transparent",
                   borderRadius: "50%",
+                  p: { xs: "6px", md: "8px" },
                 }}
               >
-                <People sx={{ fontSize: { xs: "24px", md: "30px" }, color: location.pathname === "/members" ? "black" : "#9CA3AF" }} />
+                <People sx={{ fontSize: { xs: "20px", md: "28px" }, color: location.pathname === "/members" ? "black" : "#9CA3AF" }} />
               </IconButton>
             </Link>
             <Link to="/groupmembers">
               <IconButton
-                style={{
-                  backgroundColor: location.pathname === "/groupmembers" ? "#8BD4E7" : "transparent",
+                sx={{
+                  bgcolor: location.pathname === "/groupmembers" ? "#8BD4E7" : "transparent",
                   borderRadius: "50%",
+                  p: { xs: "6px", md: "8px" },
                 }}
               >
-                <GroupsIcon sx={{ fontSize: { xs: "24px", md: "30px" }, color: location.pathname === "/groupmembers" ? "black" : "#9CA3AF" }} />
+                <GroupsIcon sx={{ fontSize: { xs: "20px", md: "28px" }, color: location.pathname === "/groupmembers" ? "black" : "#9CA3AF" }} />
               </IconButton>
             </Link>
             <Link to="/frammembers">
               <IconButton
-                style={{
-                  backgroundColor: location.pathname === "/frammembers" ? "#8BD4E7" : "transparent",
+                sx={{
+                  bgcolor: location.pathname === "/frammembers" ? "#8BD4E7" : "transparent",
                   borderRadius: "50%",
+                  p: { xs: "6px", md: "8px" },
                 }}
               >
-                <Work sx={{ fontSize: { xs: "24px", md: "30px" }, color: location.pathname === "/frammembers" ? "black" : "#9CA3AF" }} />
+                <Work sx={{ fontSize: { xs: "20px", md: "28px" }, color: location.pathname === "/frammembers" ? "black" : "#9CA3AF" }} />
               </IconButton>
             </Link>
             <Link to="/chatmessage">
               <IconButton
-                style={{
-                  backgroundColor: location.pathname === "/chatmessage" ? "#8BD4E7" : "transparent",
+                sx={{
+                  bgcolor: location.pathname === "/chatmessage" ? "#8BD4E7" : "transparent",
                   borderRadius: "50%",
+                  p: { xs: "6px", md: "8px" },
                 }}
               >
                 <Badge badgeContent={notifications.length} color="error">
-                  <Chat sx={{ fontSize: { xs: "24px", md: "30px" }, color: location.pathname === "/chatmessage" ? "black" : "#9CA3AF" }} />
+                  <Chat sx={{ fontSize: { xs: "20px", md: "28px" }, color: location.pathname === "/chatmessage" ? "black" : "#9CA3AF" }} />
                 </Badge>
               </IconButton>
             </Link>
             <Link to="/settings">
               <IconButton
-                style={{
-                  backgroundColor: location.pathname === "/settings" ? "#8BD4E7" : "transparent",
+                sx={{
+                  bgcolor: location.pathname === "/settings" ? "#8BD4E7" : "transparent",
                   borderRadius: "50%",
+                  p: { xs: "6px", md: "8px" },
                 }}
               >
-                <Settings sx={{ fontSize: { xs: "24px", md: "30px" }, color: location.pathname === "/settings" ? "black" : "#9CA3AF" }} />
+                <Settings sx={{ fontSize: { xs: "20px", md: "28px" }, color: location.pathname === "/settings" ? "black" : "#9CA3AF" }} />
               </IconButton>
             </Link>
           </Box>
         </Box>
 
         <Link to="/loginPage">
-          <IconButton>
+          <IconButton sx={{ mt: { xs: 1, md: 2 } }}>
             <Box
               sx={{
-                width: { xs: "25px", md: "50px" },
-                height: { xs: "25px", md: "50px" },
+                width: { xs: "30px", sm: "40px", md: "50px" },
+                height: { xs: "30px", sm: "40px", md: "50px" },
                 borderRadius: "50%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: "40px",
-                border: "1px solid rgb(194, 189, 189)",
+                border: "1px solid #C2BDBD",
               }}
             >
-              <ExitToApp sx={{ color: "#EF4444", fontSize: { xs: "1.8rem", md: "2.2rem" } }} />
+              <ExitToApp sx={{ color: "#EF4444", fontSize: { xs: "20px", md: "28px" } }} />
             </Box>
           </IconButton>
         </Link>
